@@ -122,11 +122,15 @@ class ArticlesController < ApplicationController
     elsif params.has_key?(:article)
       add_metadata(params[:article], "")
     elsif can? :review, @article
-      format.html { render action: 'edit_detailed' }
-      format.json { render json: @article.errors, status: :unprocessable_entity }
+      respond_to do |format|
+        format.html { render action: 'edit_detailed' }
+        format.json { render json: @article.errors, status: :unprocessable_entity }
+      end
     else
-      format.html { render action: 'edit' }
-      format.json { render json: @article.errors, status: :unprocessable_entity }
+      respond_to do |format|
+        format.html { render action: 'edit' }
+        format.json { render json: @article.errors, status: :unprocessable_entity }
+      end
     end
   end
 
@@ -141,11 +145,15 @@ class ArticlesController < ApplicationController
     elsif article_params
       add_metadata(params[:article], redirect_field)
     elsif can? :review, @article
-      format.html { render action: 'edit_detailed' }
-      format.json { render json: @article.errors, status: :unprocessable_entity }
+      respond_to do |format|
+        format.html { render action: 'edit_detailed' }
+        format.json { render json: @article.errors, status: :unprocessable_entity }
+      end
     else
-      format.html { render action: 'edit' }
-      format.json { render json: @article.errors, status: :unprocessable_entity }
+      respond_to do |format|
+        format.html { render action: 'edit' }
+        format.json { render json: @article.errors, status: :unprocessable_entity }
+      end
     end
   end
 
@@ -279,11 +287,15 @@ class ArticlesController < ApplicationController
         end
       end
     elsif can? :review, @article
-      format.html { render action: 'edit_detailed' }
-      format.json { render json: @article.errors, status: :unprocessable_entity }
+      respond_to do |format|
+        format.html { render action: 'edit_detailed' }
+        format.json { render json: @article.errors, status: :unprocessable_entity }
+      end
     else
-      format.html { render action: 'edit' }
-      format.json { render json: @article.errors, status: :unprocessable_entity }
+      respond_to do |format|
+        format.html { render action: 'edit' }
+        format.json { render json: @article.errors, status: :unprocessable_entity }
+      end
     end
   end
 

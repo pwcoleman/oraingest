@@ -74,6 +74,14 @@ describe DatasetsController do
       }.to change(Dataset,:count).by(1)
       expect(controller).to redirect_to(edit_dataset_path(@pid))
     end
+
+    context 'dataset params missing' do
+      it 'renders the edit view' do
+        sign_in @user
+        post :create, pid: @pid
+        expect(response).to render_template('datasets/edit')
+      end
+    end
   end
 
 
@@ -136,6 +144,26 @@ describe DatasetsController do
         delete :destroy, id: dataset
       }.to change { Dataset.exists?(dataset.id) }.from(true).to(false)
       expect(controller).to redirect_to(datasets_path)
+    end
+  end
+
+  describe '#agreement' do
+    let(:dataset) do
+      Dataset.create do |a|
+        a.apply_permissions(@user)
+      end
+    end
+
+    after do
+      dataset.delete
+    end
+
+    it 'renders the edit view' do
+      sign_in @user
+      get :agreement, id: dataset
+      expect(assigns(:model)).to eq('dataset_agreement')
+      expect(assigns(:agreement)).to be_a(DatasetAgreement)
+      expect(response).to render_template('datasets/_dataset_agreement_fields_edit')
     end
   end
 end

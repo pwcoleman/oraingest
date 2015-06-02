@@ -137,8 +137,10 @@ class DatasetsController < ApplicationController
     elsif params.has_key?(:dataset)
       add_metadata(params[:dataset], "")
     else
-      format.html { render action: 'edit' }
-      format.json { render json: @dataset.errors, status: :unprocessable_entity }
+      respond_to do |format|
+        format.html { render action: 'edit' }
+        format.json { render json: @dataset.errors, status: :unprocessable_entity }
+      end
     end
 
      #format.html { redirect_to action: 'show', id: @dataset.id }
@@ -156,8 +158,10 @@ class DatasetsController < ApplicationController
     elsif dataset_params
       add_metadata(params[:dataset], redirect_field)
     else
-      format.html { render action: 'edit' }
-      format.json { render json: @dataset.errors, status: :unprocessable_entity }
+      respond_to do |format|
+        format.html { render action: 'edit' }
+        format.json { render json: @dataset.errors, status: :unprocessable_entity }
+      end
     end
   end
 
@@ -328,9 +332,11 @@ class DatasetsController < ApplicationController
         end
       end
     else
-      format.html { render action: 'edit' }
-      format.json { render json: @dataset.errors, status: :unprocessable_entity }
-    end 
+      respond_to do |format|
+        format.html { render action: 'edit' }
+        format.json { render json: @dataset.errors, status: :unprocessable_entity }
+      end
+    end
   end
 
   def add_metadata(dataset_params, redirect_field)

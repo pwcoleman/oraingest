@@ -90,6 +90,25 @@ describe ArticlesController do
       }.to change(Article,:count).by(1)
       expect(controller).to redirect_to(edit_detailed_articles_path(@pid))
     end
+
+    context 'article params missing' do
+      context 'as reviewer' do
+        it 'renders the edit view' do
+          sign_in @user
+          post :create, pid: @pid
+          expect(response).to render_template('articles/edit_detailed')
+        end
+      end
+      context 'not as reviewer' do
+        it 'renders the edit view' do
+          user = FactoryGirl.find_or_create(:user)
+          sign_in user
+          post :create, pid: @pid
+          expect(response).to render_template('articles/edit')
+        end
+      end
+    end
+
   end
 
   describe '#edit' do
